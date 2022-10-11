@@ -2,6 +2,6 @@
 <imusic version="1.0" tempo="120" timeSign="4/4" loopLength="4" showGUI="false">
   <arrangement id="A" src="audio/A.mp3"></arrangement>
   <arrangement id="B" src="audio/B.mp3"></arrangement>		
-    <arrangement id="C" src="audio/C.mp3"></arrangement>
+  <arrangement id="C" src="audio/C.mp3"></arrangement>
   <arrangement id="D" src="audio/D.mp3"></arrangement>		
 </imusic>
