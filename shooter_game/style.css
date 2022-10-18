@@ -2,8 +2,12 @@ body {
     background: black;
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
 }
+
+body.game{
+    overflow:hidden;
+}
+
 canvas{
     position: absolute;
     top: 0;
@@ -43,13 +47,67 @@ button:hover {
     margin-bottom: 10mm;
 }
 
-#container{
-    width = 100%;
+#container1{
+    width: 100%;
     text-align : center;
+}
+
+#container2{
+    width: 100%;
 }
 
 
 #collisionCanvas{
     opacity: 0;
+}
 
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    grid-auto-rows: auto;
+  }
+  .one {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    text-align : center;
+  }
+  .two {
+    grid-column: 2 / 2;
+    grid-row: 1 / 2;
+    text-align : center;
+  }
+  .three {
+    grid-column: 1 / 2;
+    grid-row: 2 / 2;
+    text-align : center;
+  }
+  .four {
+    grid-column: 2 / 2;
+    grid-row: 2 / 2;
+    text-align : center;
+  }
+
+
+  .wrapper1 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    grid-auto-rows: auto;
+  }
+  .one1 {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row: 1;
+    text-align : center;
+    margin: auto;
+
+  }
+  .two1 {
+    grid-column: 3 / 3;
+    grid-row: 1;
+  }
+
+.margin1{
+    margin: 50px;
 }

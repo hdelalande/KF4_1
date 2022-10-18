@@ -11,48 +11,46 @@ document.body.style.backgroundImage = "url('wallpaper.jpg')";
 
 
 let timeToNextTarget = 0;
-let targetTimeInterval = 500;
+let targetTimeInterval = 100;
 let lastTime = 0;
 
 let targets = [];
 
 const listImages = [
-    'bee/sprites/skeleton-animation_00.png',
-    'bee/sprites/skeleton-animation_01.png',
-    'bee/sprites/skeleton-animation_02.png',
-    'bee/sprites/skeleton-animation_03.png',
-    'bee/sprites/skeleton-animation_04.png',
-    'bee/sprites/skeleton-animation_05.png',
-    'bee/sprites/skeleton-animation_06.png',
-    'bee/sprites/skeleton-animation_07.png',
-    'bee/sprites/skeleton-animation_08.png',
-    'bee/sprites/skeleton-animation_09.png',
-    'bee/sprites/skeleton-animation_10.png',
-    'bee/sprites/skeleton-animation_11.png',
-    'bee/sprites/skeleton-animation_12.png'
+    'free-colorful-balloons/1.png',
+    'free-colorful-balloons/2.png',
+    'free-colorful-balloons/3.png',
+    'free-colorful-balloons/4.png'
 ];
 
 class Target{
     constructor(){
-        this.spriteWidth = 273;
-        this.spriteHeight = 282;
-        this.sizeModifier = Math.random() * 0.1 + 0.35;
+        this.spriteWidth = 300;
+        this.spriteHeight = 410;
+        this.sizeModifier = Math.random() * 0.1 + 0.25;
         this.width = this.spriteWidth *  this.sizeModifier;
         this.height = this.spriteHeight *  this.sizeModifier;
-        this.x = canvas.width;
+        this.sizeStart = Math.random();
+        if (this.sizeStart > 0.5){
+            this.x = canvas.width;
+            this.directionX = Math.random() * 1 + 2.5;
+        }
+        else{
+            this.x = 0;
+            this.directionX = -(Math.random() * 1 + 2.5);
+        }
         this.y = Math.random() * (canvas.height - this.height);
-        this.directionX = Math.random() * 5 + 3;
-        this.directionY = Math.random() * 5 - 2.5;
+        
+        this.directionY = Math.random() * 2 - 0.5;
         this.MarkedForDeletion = false;
-        this.images = [];
-        for (let i=0 ; i < listImages.length ; i++){
-            this.images.push(new Image());
-            this.images[i].src = listImages[i];
-        };
-        this.frame = 0;
-        this.maxFrame = 5;
-        this.timeSinceFlap = 0;
-        this.flapInterval = Math.random() * 60 + 20;
+        this.test = Math.random();
+        this.image = new Image();
+        if (this.test > 0.5){
+            this.image.src = listImages[1];
+        }
+        else {
+            this.image.src = listImages[2];
+        } 
         this.randomColors = [Math.floor(Math.random()*255), Math.floor(Math.random()*255), Math.floor(Math.random()*255)];
         this.color = 'rgb('+ this.randomColors[0] + ',' + this.randomColors[1] + ',' + this.randomColors[2] + ')';
 
@@ -66,17 +64,12 @@ class Target{
         this.x -= this.directionX;
         this.y += this.directionY;
         if (this.x < 0 - this.width) this.MarkedForDeletion = true;
-        this.timeSinceFlap += deltatime;
-        if (this.timeSinceFlap > this.flapInterval){
-            if (this.frame > this.maxFrame) this.frame = 0;
-            else this.frame++;
-            this.timeSinceFlap = 0;
-        }
     }
+
     draw(){
         collisionCtx.fillStyle = this.color;
         collisionCtx.fillRect(this.x, this.y, this.width, this.height);
-        ctx.drawImage(this.images[this.frame], this.x, this.y, this.width, this.height);
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
 }
 
@@ -142,4 +135,6 @@ function animate(timestamp){
     requestAnimationFrame(animate);
 }
 
+var audio = new Audio('audio/Target_practice_1_80-80-0-120-0-120.mp3');
+audio.play();
 animate(0);
