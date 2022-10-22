@@ -246,7 +246,7 @@ text_data.then( response => {
     strFile = 'filemane=monfichier.txt&data=le contenus de mon fichier avec tout ce que je veux.';
     oXML = new XMLHttpRequest(); //lire la doc pour creer l'objet sous IE
     oXML.open('POST', 'send_file.php', false);
-    oXML.send(strFile );
+    oXML.send(strFile);
     animate(0);
 
 })
