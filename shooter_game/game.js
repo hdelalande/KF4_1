@@ -1,3 +1,33 @@
+function csvToArray(str, delimiter = ",") {
+    const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
+  
+    const rows = str.slice(str.indexOf("\n") + 1).split("\n");
+  
+    const arr = rows.map(function (row) {
+      const values = row.split(delimiter);
+      const el = headers.reduce(function (object, header, index) {
+        object[header] = values[index];
+        return object;
+      }, {});
+      return el;
+    });
+
+    return arr;
+  }
+
+async function downloadFile(file) {
+	let response = await fetch(file);
+		
+	if(response.status != 200) {
+		throw new Error("Server Error");
+	}
+		
+	// read response stream as text
+	let text_data = await response.text();
+
+	return text_data;
+}
+
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
@@ -13,8 +43,19 @@ document.body.style.backgroundImage = "url('wallpaper.jpg')";
 let timeToNextTarget = 0;
 let targetTimeInterval = 100;
 let lastTime = 0;
+let playing = false;
+let sound_name;
+let selected_file;
+let music_timer = 0;
 
 let targets = [];
+
+const chart_csv = [
+    "data/csv_chart/audio1.csv",
+    "data/csv_chart/audio2.csv",
+    "data/csv_chart/audio3.csv",
+    "data/csv_chart/audio4.csv"
+];
 
 const listImages = [
     'free-colorful-balloons/1.png',
@@ -22,6 +63,26 @@ const listImages = [
     'free-colorful-balloons/3.png',
     'free-colorful-balloons/4.png'
 ];
+  
+
+class Button{
+    constructor(){
+        this.spriteWidth = 352;
+        this.spriteHeight = 352;
+        this.sizeModifier = 1;
+        this.width = this.spriteWidth *  this.sizeModifier;
+        this.height = this.spriteHeight *  this.sizeModifier;
+        this.x = (canvas.width/2) - this.width/2;
+        this.y = (canvas.height/2) - this.height/2;
+        this.MarkedForDeletion = false;
+        this.image = new Image();
+        this.image.src = 'play.png';
+    }
+    draw(){
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+    }
+}
+
 
 class Target{
     constructor(){
@@ -89,7 +150,6 @@ class Explosion{
         this.MarkedForDeletion = false;
    }
    update(deltatime){
-        console.log(this.timeSinceLastFrame);
         this.timeSinceLastFrame += deltatime;
         if (this.timeSinceLastFrame > this.frameInterval){
             this.frame++;
@@ -102,39 +162,94 @@ class Explosion{
     }
 }
 
+
+
 window.addEventListener('click', function(e){
-    const detectPixelColor = collisionCtx.getImageData(e.x, e.y, 1, 1);
-    console.log(detectPixelColor);
-    const pc = detectPixelColor.data;
-    targets.forEach(object => {
-        if (object.randomColors[0] === pc[0] && object.randomColors[1] === pc[1] && pc[0] && object.randomColors[2] === pc[2]){
-            object.MarkedForDeletion = true;
-            explosions.push(new Explosion(object.x, object.y, object.width));
-        }
-    })
-});
+    if (playing == false){
+        playing = true;
+        console.log(sound_name);
+        document.getElementById(sound_name).play();
+    }
+    else{
+        const detectPixelColor = collisionCtx.getImageData(e.x, e.y, 1, 1);
+
+
+        let good_click = false;
+        const pc = detectPixelColor.data;
+        targets.forEach(object => {
+            if (object.randomColors[0] === pc[0] && object.randomColors[1] === pc[1] && pc[0] && object.randomColors[2] === pc[2]){
+                object.MarkedForDeletion = true;
+                explosions.push(new Explosion(object.x, object.y, object.width));
+                good_click = true;
+                }
+            })
+        
+    }});
 
 
 function animate(timestamp){
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    collisionCtx.clearRect(0, 0, canvas.width, canvas.height);
-    let deltatime = timestamp - lastTime;
-    lastTime = timestamp;
-    timeToNextTarget += deltatime;
-    if (timeToNextTarget > targetTimeInterval){
-        targets.push(new Target());
-        timeToNextTarget = 0;
-        targets.sort(function(a,b){
-            return a.width - b.width;
-        });
-    };
-    [...targets, ...explosions].forEach(object => object.update(deltatime));
-    [...targets, ...explosions].forEach(object => object.draw());
-    targets = targets.filter(object => !object.MarkedForDeletion);
-    explosions = explosions.filter(object => !object.MarkedForDeletion);
-    requestAnimationFrame(animate);
+    if (playing == true){
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        collisionCtx.clearRect(0, 0, canvas.width, canvas.height);
+        let deltatime = timestamp - lastTime;
+        music_timer = music_timer + deltatime;
+        lastTime = timestamp;
+        timeToNextTarget += deltatime;
+        if (timeToNextTarget > targetTimeInterval){
+            targets.push(new Target());
+            timeToNextTarget = 0;
+            targets.sort(function(a,b){
+                return a.width - b.width;
+            });
+        };
+        [...targets, ...explosions].forEach(object => object.update(deltatime));
+        [...targets, ...explosions].forEach(object => object.draw());
+        targets = targets.filter(object => !object.MarkedForDeletion);
+        explosions = explosions.filter(object => !object.MarkedForDeletion);
+        requestAnimationFrame(animate);
+    }
+    else{
+        lastTime = timestamp;
+        button.draw();
+        requestAnimationFrame(animate);
+    }
 }
 
-var audio = new Audio('audio/Target_practice_1_80-80-0-120-0-120.mp3');
-audio.play();
-animate(0);
+
+// const readerStructSound = new FileReader();
+let random_audio = Math.random() * (chart_csv.length);
+console.log(random_audio);
+if (random_audio < 1){
+    sound_name = "sound1";
+    sound_structure = chart_csv[0];
+}
+if (1 <= random_audio && random_audio < 2){
+    sound_name = "sound2";
+    sound_structure = chart_csv[1];
+}
+if (2 <=  random_audio && random_audio < 3){
+    sound_name = "sound3";
+    sound_structure = chart_csv[2];
+}
+if (3 <= random_audio ){
+    sound_name = "sound4";
+    sound_structure = chart_csv[3];
+}
+
+let button;
+let csv_array;
+let text_data = downloadFile(chart_csv[0]);
+console.log(sound_name);
+text_data.then( response => {
+    csv_array = csvToArray(response);
+    button = new Button();
+    strFile = 'filemane=monfichier.txt&data=le contenus de mon fichier avec tout ce que je veux.';
+    oXML = new XMLHttpRequest(); //lire la doc pour creer l'objet sous IE
+    oXML.open('POST', 'send_file.php', false);
+    oXML.send(strFile );
+    animate(0);
+
+})
+
+// var audio = new Audio('audio/Target_practice_1_80-80-0-120-0-120.mp3');
+
