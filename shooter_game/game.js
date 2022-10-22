@@ -28,6 +28,13 @@ async function downloadFile(file) {
 	return text_data;
 }
 
+async function uploadfile(text){
+    strFile = text;
+    oXML = new XMLHttpRequest(); //lire la doc pour creer l'objet sous IE
+    oXML.open('POST', 'send_file.php', false);
+    oXML.send(strFile);
+}
+
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
@@ -243,10 +250,7 @@ console.log(sound_name);
 text_data.then( response => {
     csv_array = csvToArray(response);
     button = new Button();
-    strFile = 'filemane=monfichier.txt&data=le contenus de mon fichier avec tout ce que je veux.';
-    oXML = new XMLHttpRequest(); //lire la doc pour creer l'objet sous IE
-    oXML.open('POST', 'send_file.php', false);
-    oXML.send(strFile);
+    upload = uploadfile('filemane=monfichier.txt&data=le contenus de mon fichier avec tout ce que je veux.');
     animate(0);
 
 })
