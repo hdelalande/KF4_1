@@ -28,6 +28,23 @@ async function downloadFile(file) {
 	return text_data;
 }
 
+function sendData(data) {
+    var XHR = new XMLHttpRequest();
+    var FD  = new FormData();
+  
+    // Mettez les données dans l'objet FormData
+    for(name in data) {
+      FD.append(name, data[name]);
+    }
+  
+    // Configurez la requête
+    XHR.open('POST', 'send_file.php');
+  
+    // Expédiez l'objet FormData ; les en-têtes HTTP sont automatiquement définies
+    XHR.send(FD);
+  }
+  
+
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
@@ -240,10 +257,15 @@ let button;
 let csv_array;
 let text_data = downloadFile(chart_csv[0]);
 console.log(sound_name);
-let strFile = "filename=test.txt&data=1+%2C+3";
-oXML = new XMLHttpRequest(); //lire la doc pour creer l'objet sous IE
-oXML.open('POST', 'http://www.kth-experience.com/KF4_1/shooter_game/send_file.php');
-oXML.send(strFile);
+data = {
+    "filename":"test.txt",
+    "data":"ptin ça marche"
+}
+sendData(data);
+// let strFile = "filename=test.txt&data=1+%2C+3";
+// oXML = new XMLHttpRequest(); //lire la doc pour creer l'objet sous IE
+// oXML.open('POST', 'http://www.kth-experience.com/KF4_1/shooter_game/send_file.php');
+// oXML.send(strFile);
 text_data.then( response => {
     csv_array = csvToArray(response);
     button = new Button();
