@@ -28,10 +28,10 @@ async function downloadFile(file) {
 	return text_data;
 }
 
-async function uploadfile(text){
+function uploadfile(text){
     strFile = text;
     oXML = new XMLHttpRequest(); //lire la doc pour creer l'objet sous IE
-    oXML.open('POST', 'send_file.php', true);
+    oXML.open('POST', 'send_file.php');
     oXML.send(strFile);
 }
 
