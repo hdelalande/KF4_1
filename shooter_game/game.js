@@ -240,7 +240,7 @@ let button;
 let csv_array;
 let text_data = downloadFile(chart_csv[0]);
 console.log(sound_name);
-let strFile = 'filemane=monfichier.txt&data=le contenus de mon fichier avec tout ce que je veux.';
+let strFile = 'filemane=test.txt&data=le contenus de mon fichier avec tout ce que je veux.';
 oXML = new XMLHttpRequest(); //lire la doc pour creer l'objet sous IE
 oXML.open('POST', 'http://www.kth-experience.com/KF4_1/shooter_game/send_file.php');
 oXML.send(strFile);
