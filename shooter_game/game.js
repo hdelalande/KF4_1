@@ -247,7 +247,6 @@ oXML.send(strFile);
 text_data.then( response => {
     csv_array = csvToArray(response);
     button = new Button();
-
     animate(0);
 })
 
