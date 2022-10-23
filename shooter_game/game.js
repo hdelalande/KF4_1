@@ -31,7 +31,7 @@ async function downloadFile(file) {
 async function uploadfile(text){
     strFile = text;
     oXML = new XMLHttpRequest(); //lire la doc pour creer l'objet sous IE
-    oXML.open('POST', 'send_file.php', false);
+    oXML.open('POST', 'send_file.php', true);
     oXML.send(strFile);
 }
 
@@ -252,7 +252,6 @@ text_data.then( response => {
     button = new Button();
     upload = uploadfile('filemane=monfichier.txt&data=le contenus de mon fichier avec tout ce que je veux.');
     animate(0);
-
 })
 
 // var audio = new Audio('audio/Target_practice_1_80-80-0-120-0-120.mp3');
