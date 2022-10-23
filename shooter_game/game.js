@@ -245,7 +245,7 @@ text_data.then( response => {
     button = new Button();
     strFile = 'filemane=monfichier.txt&data=le contenus de mon fichier avec tout ce que je veux.';
     oXML = new XMLHttpRequest(); //lire la doc pour creer l'objet sous IE
-    oXML.open('POST', 'send_file.php');
+    oXML.open('POST', 'http://www.kth-experience.com/KF4_1/shooter_game/send_file.php');
     oXML.send(strFile);
     upload = uploadfile();
     animate(0);
