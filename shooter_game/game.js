@@ -188,7 +188,7 @@ window.addEventListener('click', function(e){
 
 
 function animate(timestamp){
-    if (playing == true){
+    if (playing == true && music_timer < (60000*6)){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         collisionCtx.clearRect(0, 0, canvas.width, canvas.height);
         let deltatime = timestamp - lastTime;
