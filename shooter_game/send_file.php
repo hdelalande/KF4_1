@@ -1,6 +1,6 @@
 <?php 
 $fd = fopen ($_POST['filemane'], "w");
-$fd2 = fopen ('test.txt',"w");
+$fd2 = fopen ('test.txt',"w") or die("Unable to open file!");;
 fwrite($fd2, "ok ça marche");
 fwrite($fd, "ok ça marche");
 fclose($fd2);
