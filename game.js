@@ -344,19 +344,13 @@ let csv_array;
 let text_data = downloadFile(chart_csv[0]);
 
 
-// let strFile = "filename=test.txt&data=1+%2C+3";
-// oXML = new XMLHttpRequest(); //lire la doc pour creer l'objet sous IE
-// oXML.open('POST', 'http://www.kth-experience.com/KF4_1/shooter_game/send_file.php');
-// oXML.send(strFile);
 text_data.then( response => {
     csv_array = csvToArray(response);
     console.log(csv_array);
-    // [...csv_array].forEach(object => experience_duration += object['time']);
-    experience_duration = 7000;
+    [...csv_array].forEach(object => experience_duration += object['time']);
     console.log(experience_duration);
     button = new Button();
     animate(0);
 })
 
-// var audio = new Audio('audio/Target_practice_1_80-80-0-120-0-120.mp3');
 
