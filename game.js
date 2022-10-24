@@ -47,6 +47,30 @@ function sendData(data) {
 
 
 function final(){
+    window.removeEventListener('click', function(e){
+        if (music_timer < experience_duration){
+        
+        if (playing == false){
+            playing = true;
+            document.getElementById(sound_name).play();
+        }
+        else{
+            const detectPixelColor = collisionCtx.getImageData(e.x, e.y, 1, 1);
+    
+    
+            let good_click = false;
+            const pc = detectPixelColor.data;
+            targets.forEach(object => {
+                if (object.randomColors[0] === pc[0] && object.randomColors[1] === pc[1] && pc[0] && object.randomColors[2] === pc[2]){
+                    object.MarkedForDeletion = true;
+                    explosions.push(new Explosion(object.x, object.y, object.width));
+                    good_click = true;
+                    }
+                })
+                number_of_click =+ 1;            
+                let latence = Math.min(music_timer % (1/(csv_array[step]["tempo"]*1000)),(music_timer+(1/(csv_array[step]["tempo"]*1000))) % (1/(csv_array[step]["tempo"]*1000)));
+                result += id +","+music_timer+","+latence+","+csv_array[step]["tempo"] +","+csv_array[step]["structure"]+","+number_of_click+","+good_click+","+sound_name+"\n"
+        }}});
     document.getElementById("final").style.display = "block";
 }
 
@@ -214,9 +238,10 @@ class Explosion{
 }
 
 
-if (music_timer < (experience_duration)){
+
 
 window.addEventListener('click', function(e){
+    if (music_timer < experience_duration){
     
     if (playing == false){
         playing = true;
@@ -238,8 +263,8 @@ window.addEventListener('click', function(e){
             number_of_click =+ 1;            
             let latence = Math.min(music_timer % (1/(csv_array[step]["tempo"]*1000)),(music_timer+(1/(csv_array[step]["tempo"]*1000))) % (1/(csv_array[step]["tempo"]*1000)));
             result += id +","+music_timer+","+latence+","+csv_array[step]["tempo"] +","+csv_array[step]["structure"]+","+number_of_click+","+good_click+","+sound_name+"\n"
-    }});
-}
+    }}});
+
 
 
 function animate(timestamp){
