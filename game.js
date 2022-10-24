@@ -68,7 +68,8 @@ const collisionCanvas = document.getElementById('collisionCanvas');
 const collisionCtx = collisionCanvas.getContext('2d');
 collisionCanvas.width = window.innerWidth;
 collisionCanvas.height = window.innerHeight;
-document.getElementById("final").style.display = "none";
+const form_final = document.getElementById('final');
+form_final.style.display = 'none';
 
 document.body.style.backgroundImage = "url('wallpaper.jpg')";
 
