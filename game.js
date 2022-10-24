@@ -319,6 +319,7 @@ let text_data = downloadFile(chart_csv[0]);
 // oXML.send(strFile);
 text_data.then( response => {
     csv_array = csvToArray(response);
+    console.log(csv_array);
     [...csv_array].forEach(object => experience_duration += object['time']);
     console.log(experience_duration);
     button = new Button();
