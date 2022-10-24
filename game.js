@@ -322,7 +322,8 @@ let text_data = downloadFile(chart_csv[0]);
 text_data.then( response => {
     csv_array = csvToArray(response);
     console.log(csv_array);
-    [...csv_array].forEach(object => experience_duration += object['time']);
+    // [...csv_array].forEach(object => experience_duration += object['time']);
+    experience_duration = 7000;
     console.log(experience_duration);
     button = new Button();
     animate(0);
