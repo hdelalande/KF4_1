@@ -83,6 +83,7 @@ function send_final(){
     var gender_value = gender.value;
     final_response["data"] = id+','+sound_name+","+gender_value+","+age_value+"\n";
     sendData(final_response);
+    location.href = '';
 }
   
 
