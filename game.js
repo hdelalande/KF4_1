@@ -81,7 +81,7 @@ function send_final(){
     var age_value = age.value;
     var gender = document.getElementById("gender");
     var gender_value = gender.value;
-    final_response["data"]= id+','+sound_name+","+gender_value+","+age_value+"\n";
+    final_response["data"] = id+','+sound_name+","+gender_value+","+age_value+"\n";
     sendData(final_response);
 }
   
