@@ -319,6 +319,7 @@ let text_data = downloadFile(chart_csv[0]);
 text_data.then( response => {
     csv_array = csvToArray(response);
     [...csv_array].forEach(experience_duration += object['time']);
+    console.log(experience_duration);
     button = new Button();
     animate(0);
 })
