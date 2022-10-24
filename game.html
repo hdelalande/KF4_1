@@ -2,21 +2,49 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>iMusic - Getting Started</title>
-		<link rel="stylesheet" href="style.css">
-        <script src="game.js"></script>
+        <meta http-equiv="X-UA-Compatible" content="IE-edge">
+		<meta name="viewport" content="width=device-width, initial-sacale=1.0">
+        <title>Shooter game</title>
+		<link href="style.css" rel="stylesheet" type="text/css" />
 	</head>
-	<body onload="startGame()">
-        
-		<h1>Test - the game</h1>
-        <p> Choose a song that you like to play with : </p>
-			<div>
-				<button data-imusic-play="A">Loop A</button>
-				<button data-imusic-play="B">Loop B</button>
-				<button data-imusic="stop">STOP</button>
-			</div>
 
-		<script src="imusic_091.js" data-music-structure="imusic.xml"></script>
+
+	<body class="game">
+        <canvas id="collisionCanvas"></canvas>
+        <canvas id="canvas1"></canvas>
+		<audio id="audio1" src="audio/Target_practice_1_80-80-0-120-0-120.mp3" preload="auto"></audio>
+		<audio id="audio2" src="audio/Target practice 2 100-()-100-()-80-80.mp3" preload="auto"></audio>
+		<audio id="audio3" src="audio/Target practice 3 80-100-()-80-()-100.mp3" preload="auto"></audio>
+		<audio id="audio4" src="audio/Target practice 4 100-()-100-()-80-80.mp3" preload="auto"></audio>	
+        <script src="game.js"></script>
+
+		<div class="testfrom" id="final">
+			<form action="send_file.php" method="post">
+			  <h1>Thank you !</h1>
+			  <p>This is the end of the experience. Please give us some information about yourself before you leave. </p>
+			  <h4>Gender<span>*</span></h4>
+			  <select id="gender">
+				<option class="disabled" value="location" disabled selected>*Please Select*</option>
+				<option value="man">Man</option>
+				<option value="woman">Women</option>
+				<option value="other">Other</option>
+			  </select>
+			  <h4>Age<span>*</span></h4>
+			  <select id="age">
+				<option class="disabled" value="location" disabled selected>*Please Select*</option>
+				<option value="under 13">Under 13</option>
+				<option value="13-17">13-17</option>
+				<option value="18-24">18-24</option>
+				<option value="25-34">25-34</option>
+				<option value="35-44">35-44</option>
+				<option value="45-54">45-54</option>
+				<option value="55 or older">55 or older</option>
+			  </select>
+			  <div class="btn-block">
+				<button onclick="send_final()" href="/">Send Infos</button>
+			  </div>
+			</form>
+		  </div>
 	</body>
 
 </html>

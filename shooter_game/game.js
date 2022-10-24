@@ -31,15 +31,12 @@ async function downloadFile(file) {
 function sendData(data) {
     var XHR = new XMLHttpRequest();
     var FD  = new FormData();
-  
     // Mettez les données dans l'objet FormData
     for(name in data) {
       FD.append(name, data[name]);
     }
-  
     // Configurez la requête
-    XHR.open('POST', 'send_file.php');
-  
+    XHR.open('POST', 'send_file.php');  
     // Expédiez l'objet FormData ; les en-têtes HTTP sont automatiquement définies
     XHR.send(FD);
   }
@@ -64,6 +61,12 @@ let playing = false;
 let sound_name;
 let selected_file;
 let music_timer = 0;
+
+let id = Date.now();
+let result;
+let data = {
+    "filename":"data/experiences/results.csv",
+}
 
 let targets = [];
 
@@ -200,11 +203,19 @@ window.addEventListener('click', function(e){
                 good_click = true;
                 }
             })
-        
+            let latence = Math.min(music_timer%(1/tempo), (music_timer+(1/tempo))%(1/tempo))
+
+
+            result += id +","+music_timer+","+music_timer
     }});
 
 
 function animate(timestamp){
+
+    if (music_timer > (60000*6)){
+        data.append(data, result);
+        sendData(data);
+    }
     if (playing == true && music_timer < (60000*6)){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         collisionCtx.clearRect(0, 0, canvas.width, canvas.height);
@@ -257,11 +268,8 @@ let button;
 let csv_array;
 let text_data = downloadFile(chart_csv[0]);
 console.log(sound_name);
-data = {
-    "filename":"test.txt",
-    "data":"ptin ça marche"
-}
-sendData(data);
+
+
 // let strFile = "filename=test.txt&data=1+%2C+3";
 // oXML = new XMLHttpRequest(); //lire la doc pour creer l'objet sous IE
 // oXML.open('POST', 'http://www.kth-experience.com/KF4_1/shooter_game/send_file.php');
