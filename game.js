@@ -110,7 +110,7 @@ let playing = false;
 let sound_name;
 let selected_file;
 let music_timer = 0;
-let experience_duration = 3590000;
+let experience_duration = 359000;
 let sending_timer = 5000;
 let step_time = 60000;
 let step = 0;
