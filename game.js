@@ -68,7 +68,7 @@ function final(){
                 }
             })
             number_of_click += 1;            
-            let latence = Math.min(music_timer % (1/((csv_array[step]["tempo"]/60)/1000)),(1/((csv_array[step]["tempo"]/60)/1000)-(music_timer % (1/((csv_array[step]["tempo"]/60)/1000)));
+            let latence = Math.min(music_timer % (1/((csv_array[step]["tempo"]/60)/1000)),(1/((csv_array[step]["tempo"]/60)/1000)-(music_timer % (1/((csv_array[step]["tempo"]/60)/1000))));
             result += id +","+music_timer+","+latence+","+csv_array[step]["tempo"] +","+csv_array[step]["structure"]+","+number_of_click+","+good_click+","+sound_name+"\n"
     }}});
     document.getElementById("canvas1").style.display = "none";
@@ -108,7 +108,7 @@ let playing = false;
 let sound_name;
 let selected_file;
 let music_timer = 0;
-let experience_duration = 359000;
+let experience_duration = 3590000;
 let sending_timer = 5000;
 let step_time = 60000;
 let step = 0;
