@@ -276,6 +276,8 @@ window.addEventListener('click', function(e){
 
 function animate(timestamp){
     if (music_timer > (experience_duration)){
+        console.log(music_timer);
+        console.log(experience_duration);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         collisionCtx.clearRect(0, 0, canvas.width, canvas.height);
         final();
