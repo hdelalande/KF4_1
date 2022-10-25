@@ -297,7 +297,7 @@ function animate(timestamp){
             step_time = 60000 + step_time;
         }
     
-        if (playing == true && music_timer < (60000*6)){
+        if (playing == true){
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             collisionCtx.clearRect(0, 0, canvas.width, canvas.height);
             let deltatime = timestamp - lastTime;
