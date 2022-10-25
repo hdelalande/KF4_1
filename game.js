@@ -48,29 +48,31 @@ function sendData(data) {
 
 function final(){
     window.removeEventListener('click', function(e){
-    if (music_timer < experience_duration){
+        if (music_timer < experience_duration){
     
-    if (playing == false){
-        playing = true;
-        document.getElementById(sound_name).play();
-    }
-    else{
-        const detectPixelColor = collisionCtx.getImageData(e.x, e.y, 1, 1);
-
-
-        let good_click = false;
-        const pc = detectPixelColor.data;
-        targets.forEach(object => {
-            if (object.randomColors[0] === pc[0] && object.randomColors[1] === pc[1] && pc[0] && object.randomColors[2] === pc[2]){
-                object.MarkedForDeletion = true;
-                explosions.push(new Explosion(object.x, object.y, object.width));
-                good_click = true;
-                }
-            })
-            number_of_click += 1;            
-            let latence = Math.min(music_timer % (1/((csv_array[step]["tempo"]/60)/1000)),(1/((csv_array[step]["tempo"]/60)/1000)-(music_timer % (1/((csv_array[step]["tempo"]/60)/1000)))));
-            result += id +","+music_timer+","+latence+","+csv_array[step]["tempo"] +","+csv_array[step]["structure"]+","+number_of_click+","+good_click+","+sound_name+"\n"
-    }}});
+            if (playing == false){
+                playing = true;
+                document.getElementById(sound_name).play();
+            }
+            else{
+                const detectPixelColor = collisionCtx.getImageData(e.x, e.y, 1, 1);
+        
+        
+                let good_click = false;
+                const pc = detectPixelColor.data;
+                targets.forEach(object => {
+                    if (object.randomColors[0] === pc[0] && object.randomColors[1] === pc[1] && pc[0] && object.randomColors[2] === pc[2]){
+                        object.MarkedForDeletion = true;
+                        explosions.push(new Explosion(object.x, object.y, object.width));
+                        good_click = true;
+                        }
+                    })
+                    if (csv_array[step]){
+                        number_of_click =+ 1;            
+                        let latence = Math.min(music_timer % (1/((csv_array[step]["tempo"]/60)/1000)),(1/((csv_array[step]["tempo"]/60)/1000)-(music_timer % (1/((csv_array[step]["tempo"]/60)/1000)))));
+                        result += id +","+music_timer+","+latence+","+csv_array[step]["tempo"] +","+csv_array[step]["structure"]+","+number_of_click+","+good_click+","+sound_name+"\n";
+                    }
+            }}});
     document.getElementById("canvas1").style.display = "none";
     document.getElementById("collisionCanvas").style.display = "none";
     document.getElementById("final").style.display = "block";
@@ -263,9 +265,11 @@ window.addEventListener('click', function(e){
                 good_click = true;
                 }
             })
-            number_of_click =+ 1;            
-            let latence = Math.min(music_timer % (1/(csv_array[step]["tempo"]*1000)),(music_timer+(1/(csv_array[step]["tempo"]*1000))) % (1/(csv_array[step]["tempo"]*1000)));
-            result += id +","+music_timer+","+latence+","+csv_array[step]["tempo"] +","+csv_array[step]["structure"]+","+number_of_click+","+good_click+","+sound_name+"\n"
+            if (csv_array[step]){
+                number_of_click =+ 1;            
+                let latence = Math.min(music_timer % (1/((csv_array[step]["tempo"]/60)/1000)),(1/((csv_array[step]["tempo"]/60)/1000)-(music_timer % (1/((csv_array[step]["tempo"]/60)/1000)))));
+                result += id +","+music_timer+","+latence+","+csv_array[step]["tempo"] +","+csv_array[step]["structure"]+","+number_of_click+","+good_click+","+sound_name+"\n";
+            }
     }}});
 
 
@@ -278,11 +282,13 @@ function animate(timestamp){
     }
     else{
         if (sending_timer < 0){
-            response['data'] = result;
-            sendData(response);
-            sending_timer = 5000;
-            result = "";
-            response['data'] = "";
+            if (result){            
+                response['data'] = result;
+                sendData(response);
+                sending_timer = 5000;
+                result = "";
+                response['data'] = "";
+            }
         }
         if (step_time < 0){
             step += 1;
